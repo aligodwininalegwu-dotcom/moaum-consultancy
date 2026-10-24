@@ -11,7 +11,7 @@ export function AuthShell({ title, subtitle, children }: { title: string; subtit
       <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-gold-500/15 blur-3xl" aria-hidden />
       <div className="container relative grid items-center gap-12 lg:grid-cols-2">
         <div className="hidden text-white lg:block">
-          <Crest className="h-20" />
+          <Crest alt="Crest of Rev. Fr. Moses Orshio Adasu University, Makurdi" className="h-20 ring-4 ring-white/10" />
           <h2 className="mt-8 max-w-md font-serif text-4xl font-semibold leading-tight">One account for every Consultancy Unit service.</h2>
           <ul className="mt-8 space-y-3 text-white/75">
             {["Apply for shops on both campuses", "Register for e-learning and summer programmes", "Track every application in real time", "Download official letters as PDF"].map((t) => (

@@ -48,7 +48,7 @@ export default function AboutPage() {
       <section className="relative overflow-clip bg-forest-900 py-20 text-white">
         <div className="absolute inset-0 bg-grid opacity-50" aria-hidden />
         <div className="container relative grid items-center gap-12 lg:grid-cols-[auto_1fr]">
-          <Reveal><Crest className="h-40 drop-shadow-2xl" /></Reveal>
+          <Reveal><Crest alt="Crest of Rev. Fr. Moses Orshio Adasu University, Makurdi" className="h-40 shadow-2xl ring-4 ring-gold-500/30" /></Reveal>
           <Reveal delay={0.1}>
             <Quote className="h-8 w-8 text-gold-400" />
             <p className="mt-4 font-serif text-3xl font-semibold italic sm:text-4xl">{site.motto}</p>

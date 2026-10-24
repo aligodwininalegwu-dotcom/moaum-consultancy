@@ -1,4 +1,6 @@
-import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from "pdf-lib";
+import path from "node:path";
+import { readFile } from "node:fs/promises";
+import { PDFDocument, StandardFonts, rgb, type PDFFont } from "pdf-lib";
 import { site } from "@/data/site";
 
 const GREEN = rgb(10 / 255, 77 / 255, 60 / 255);
@@ -33,24 +35,11 @@ function wrap(text: string, font: PDFFont, size: number, width: number) {
   return lines;
 }
 
-function drawCrest(page: PDFPage, x: number, y: number) {
-  // Simplified shield mark matching the website crest.
-  page.drawSvgPath("M24 2 L45 9 V27 C45 40 36 49 24 54 C12 49 3 40 3 27 V9 Z", {
-    x,
-    y,
-    scale: 1.1,
-    color: GREEN,
-    borderColor: GOLD,
-    borderWidth: 2,
-  });
-  page.drawCircle({ x: x + 26.4, y: y - 24.2, size: 6.5, color: GOLD });
-  page.drawSvgPath("M11 31 C17 29 21 30 24 33 C27 30 31 29 37 31 V42 C31 40 27 41 24 44 C21 41 17 40 11 42 Z", {
-    x,
-    y,
-    scale: 1.1,
-    color: rgb(0.97, 0.95, 0.89),
-  });
-}
+// Official crest on a white disc (generated from the university's logo).
+// next.config.mjs traces this file into the letter routes' serverless bundle.
+const LOGO_PATH = path.join(process.cwd(), "src/server/letter-logo.png");
+let logoBytes: Promise<Buffer> | null = null;
+const loadLogo = () => (logoBytes ??= readFile(LOGO_PATH));
 
 /**
  * The standard PDF fonts only cover WinAnsi (Latin-1-ish). Normalise common
@@ -104,10 +93,11 @@ export async function buildLetter(rawInput: LetterInput) {
   // Letterhead
   page.drawRectangle({ x: 0, y: height - 118, width, height: 118, color: GREEN });
   page.drawRectangle({ x: 0, y: height - 122, width, height: 4, color: GOLD });
-  drawCrest(page, margin - 4, height - 28);
-  page.drawText(site.university.toUpperCase(), { x: margin + 62, y: height - 52, size: 13, font: serifBold, color: rgb(1, 1, 1) });
-  page.drawText(`${site.unit.toUpperCase()} · MAKURDI, BENUE STATE`, { x: margin + 62, y: height - 70, size: 9, font: sansBold, color: GOLD });
-  page.drawText(`"${site.motto}"`, { x: margin + 62, y: height - 88, size: 9.5, font: serifItalic, color: rgb(0.85, 0.9, 0.87) });
+  const logo = await pdf.embedPng(await loadLogo());
+  page.drawImage(logo, { x: margin - 6, y: height - 104, width: 88, height: 88 });
+  page.drawText(site.university.toUpperCase(), { x: margin + 94, y: height - 52, size: 13, font: serifBold, color: rgb(1, 1, 1) });
+  page.drawText(`${site.unit.toUpperCase()} · MAKURDI, BENUE STATE`, { x: margin + 94, y: height - 70, size: 9, font: sansBold, color: GOLD });
+  page.drawText(`"${site.motto}"`, { x: margin + 94, y: height - 88, size: 9.5, font: serifItalic, color: rgb(0.85, 0.9, 0.87) });
 
   let y = height - 160;
   page.drawText(`Ref: ${input.reference}`, { x: margin, y, size: 10, font: sansBold, color: INK });
