@@ -1,0 +1,156 @@
+// MOAUM Consultancy — database schema
+// SQLite is used for local development. To move to PostgreSQL, change the
+// provider below to "postgresql" and point DATABASE_URL at your server.
+// (SQLite has no native enums, so status/role fields are validated strings;
+// the allowed values live in src/lib/constants.ts.)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  /// STUDENT | STAFF | ADMIN  (unauthenticated visitors are "PUBLIC")
+  role         String   @default("STUDENT")
+  phone        String?
+  matricNo     String?
+  department   String?
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  shopApplications ShopApplication[] @relation("Applicant")
+  reviewedShopApps ShopApplication[] @relation("Reviewer")
+  registrations    Registration[]
+}
+
+model Shop {
+  id          String   @id @default(cuid())
+  /// e.g. WC-A01 (Western Campus, Block A, Unit 01)
+  code        String   @unique
+  /// WESTERN | EASTERN
+  campus      String
+  block       String
+  location    String
+  /// Business Centre | Food & Catering | Retail | Services | Kiosk
+  category    String
+  sizeSqm     Float
+  /// Annual rent in Naira
+  annualRent  Int
+  /// AVAILABLE | OCCUPIED | RESERVED | MAINTENANCE
+  status      String   @default("AVAILABLE")
+  /// Comma-separated list, e.g. "Electricity,Water,Burglary-proof"
+  features    String   @default("")
+  description String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  preferredBy ShopApplication[] @relation("PreferredShop")
+  allocatedTo ShopApplication[] @relation("AllocatedShop")
+}
+
+model ShopApplication {
+  id               String   @id @default(cuid())
+  /// Public tracking reference, e.g. MOAUM-SA-2026-4F7K2
+  reference        String   @unique
+  campus           String
+  businessName     String
+  businessType     String
+  description      String
+  yearsExperience  Int      @default(0)
+  phone            String
+  /// Stored file paths, relative to the uploads directory
+  idDocument       String?
+  proposalDocument String?
+  /// PENDING | UNDER_REVIEW | APPROVED | REJECTED | ALLOCATED
+  status           String   @default("PENDING")
+  adminNote        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  applicantId     String
+  applicant       User    @relation("Applicant", fields: [applicantId], references: [id], onDelete: Cascade)
+  preferredShopId String?
+  preferredShop   Shop?   @relation("PreferredShop", fields: [preferredShopId], references: [id], onDelete: SetNull)
+  allocatedShopId String?
+  allocatedShop   Shop?   @relation("AllocatedShop", fields: [allocatedShopId], references: [id], onDelete: SetNull)
+  reviewedById    String?
+  reviewedBy      User?   @relation("Reviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([campus])
+}
+
+model Programme {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  /// ELEARNING | SUMMER
+  category    String
+  summary     String
+  description String
+  duration    String
+  /// Online | On-campus | Hybrid
+  mode        String
+  level       String
+  /// Fee in Naira
+  fee         Int
+  seats       Int
+  startDate   DateTime
+  /// JSON-encoded string[] of modules / topics
+  modules     String   @default("[]")
+  /// Lucide icon name used on course cards
+  icon        String   @default("BookOpen")
+  featured    Boolean  @default(false)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  registrations Registration[]
+}
+
+model Registration {
+  id               String   @id @default(cuid())
+  /// e.g. MOAUM-PR-2026-8H2LQ
+  reference        String   @unique
+  /// PENDING | CONFIRMED | REJECTED | COMPLETED
+  status           String   @default("PENDING")
+  /// UNPAID | AWAITING_VERIFICATION | PAID
+  paymentStatus    String   @default("UNPAID")
+  paymentReference String?
+  phone            String
+  institution      String?
+  motivation       String?
+  adminNote        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  programmeId String
+  programme   Programme @relation(fields: [programmeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, programmeId])
+  @@index([status])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  /// General Enquiry | Shop Allocation | Programmes | Career Guidance | Training Workshop | Facility Booking | Consultancy
+  category  String
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

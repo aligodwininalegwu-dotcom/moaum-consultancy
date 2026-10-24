@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 165 40% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 165 40% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 165 40% 9%;
+    /* #0A4D3C deep green */
+    --primary: 164 77% 17%;
+    --primary-foreground: 45 60% 97%;
+    --secondary: 150 14% 95%;
+    --secondary-foreground: 164 77% 17%;
+    /* #C9A227 gold */
+    --accent: 46 68% 47%;
+    --accent-foreground: 165 40% 9%;
+    --muted: 150 12% 96%;
+    --muted-foreground: 160 8% 38%;
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 150 12% 89%;
+    --input: 150 12% 86%;
+    --ring: 164 77% 25%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 165 35% 5%;
+    --foreground: 45 25% 94%;
+    --card: 165 30% 8%;
+    --card-foreground: 45 25% 94%;
+    --popover: 165 30% 8%;
+    --popover-foreground: 45 25% 94%;
+    --primary: 158 52% 42%;
+    --primary-foreground: 165 40% 6%;
+    --secondary: 165 22% 13%;
+    --secondary-foreground: 45 25% 94%;
+    --accent: 46 70% 55%;
+    --accent-foreground: 165 40% 6%;
+    --muted: 165 20% 12%;
+    --muted-foreground: 150 8% 65%;
+    --destructive: 0 63% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 165 18% 17%;
+    --input: 165 18% 20%;
+    --ring: 158 52% 45%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+  ::selection {
+    @apply bg-gold-300/60 text-forest-950;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .bg-grid {
+    background-image: linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-soft {
+    background-image: linear-gradient(to right, hsl(var(--foreground) / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--foreground) / 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300 bg-clip-text text-transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
