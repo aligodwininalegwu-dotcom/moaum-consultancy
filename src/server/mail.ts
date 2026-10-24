@@ -75,6 +75,13 @@ export async function sendMail({ to, subject, html, replyTo }: Mail) {
   }
 }
 
+/** Checks the SMTP login (used by `npm run mail:test`). Throws on failure. */
+export async function verifyMailConnection() {
+  const t = getTransporter();
+  if (!t) throw new Error("SMTP_HOST is not set in .env, so emails are only logged.");
+  await t.verify();
+}
+
 /* ── Templates ────────────────────────────────────────────────────── */
 
 export const mail = {
