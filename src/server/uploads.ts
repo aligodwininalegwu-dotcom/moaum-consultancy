@@ -11,7 +11,13 @@ import { ALLOWED_UPLOAD_TYPES, MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL } from "@/lib/
  */
 
 const UPLOAD_DIR = path.resolve(process.cwd(), process.env.UPLOAD_DIR ?? "uploads");
-const useBlob = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+/** Vercel Blob token; the integration may add a name prefix (e.g. STORAGE_READ_WRITE_TOKEN). */
+function blobToken() {
+  if (process.env.BLOB_READ_WRITE_TOKEN) return process.env.BLOB_READ_WRITE_TOKEN;
+  const name = Object.keys(process.env).find((n) => n.endsWith("_READ_WRITE_TOKEN") && process.env[n]?.startsWith("vercel_blob_"));
+  return name ? process.env[name] : undefined;
+}
+const useBlob = () => Boolean(blobToken());
 
 const EXT: Record<string, string> = {
   "application/pdf": "pdf",
@@ -34,7 +40,7 @@ export async function saveUpload(file: File, prefix: string) {
     const { put } = await import("@vercel/blob");
     // The random UUID plus Blob's own random suffix make the URL unguessable;
     // it is never sent to the browser (downloads are proxied by /api/files).
-    const blob = await put(`applications/${name}`, file, { access: "public", contentType: file.type, addRandomSuffix: true });
+    const blob = await put(`applications/${name}`, file, { access: "public", contentType: file.type, addRandomSuffix: true, token: blobToken() });
     return blob.url;
   }
 
