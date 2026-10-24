@@ -16,6 +16,7 @@ import {
   type Role,
 } from "@/lib/constants";
 import type { ActionResult } from "@/server/actions";
+import { mail } from "@/server/mail";
 
 async function guard(roles: Role[] = CONSOLE_ROLES) {
   const session = await getSession();
@@ -43,8 +44,9 @@ export async function reviewShopApplication(input: z.infer<typeof reviewSchema>)
   if (!parsed.success) return { ok: false, error: "Invalid review data." };
   const { id, status, allocatedShopId, adminNote } = parsed.data;
 
-  const app = await prisma.shopApplication.findUnique({ where: { id } });
+  const app = await prisma.shopApplication.findUnique({ where: { id }, include: { applicant: { select: { name: true, email: true } } } });
   if (!app) return { ok: false, error: "Application not found." };
+  let shopCode: string | undefined;
 
   if (status === "ALLOCATED") {
     if (!allocatedShopId) return { ok: false, error: "Choose a shop to allocate." };
@@ -52,6 +54,7 @@ export async function reviewShopApplication(input: z.infer<typeof reviewSchema>)
     if (!shop || shop.campus !== app.campus) return { ok: false, error: "Choose a shop on the applicant's campus." };
     const freeOrSame = shop.status === "AVAILABLE" || shop.status === "RESERVED" || app.allocatedShopId === shop.id;
     if (!freeOrSame) return { ok: false, error: `Shop ${shop.code} is ${shop.status.toLowerCase()}.` };
+    shopCode = shop.code;
 
     await prisma.$transaction([
       // Release a previously allocated shop if the allocation is being changed.
@@ -75,6 +78,17 @@ export async function reviewShopApplication(input: z.infer<typeof reviewSchema>)
   }
 
   refresh();
+  // Tell the applicant only when something they can see actually changed.
+  const changed = status !== app.status || (adminNote || null) !== app.adminNote || (status === "ALLOCATED" && allocatedShopId !== app.allocatedShopId);
+  if (changed) {
+    await mail.shopApplicationUpdated(app.applicant.email, app.applicant.name, {
+      reference: app.reference,
+      businessName: app.businessName,
+      status,
+      note: adminNote,
+      shopCode,
+    });
+  }
   return { ok: true, message: `Application ${app.reference} updated.` };
 }
 
@@ -133,8 +147,23 @@ export async function updateRegistration(input: z.infer<typeof regSchema>): Prom
   const parsed = regSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Invalid data." };
   const { id, ...data } = parsed.data;
-  const reg = await prisma.registration.update({ where: { id }, data: { ...data, adminNote: data.adminNote || null } });
+  const before = await prisma.registration.findUnique({ where: { id } });
+  if (!before) return { ok: false, error: "Registration not found." };
+  const reg = await prisma.registration.update({
+    where: { id },
+    data: { ...data, adminNote: data.adminNote || null },
+    include: { user: { select: { name: true, email: true } }, programme: { select: { title: true } } },
+  });
   refresh();
+  if (before.status !== reg.status || before.paymentStatus !== reg.paymentStatus || before.adminNote !== reg.adminNote) {
+    await mail.registrationUpdated(reg.user.email, reg.user.name, {
+      reference: reg.reference,
+      programme: reg.programme.title,
+      status: reg.status,
+      paymentStatus: reg.paymentStatus,
+      note: reg.adminNote,
+    });
+  }
   return { ok: true, message: `Registration ${reg.reference} updated.` };
 }
 

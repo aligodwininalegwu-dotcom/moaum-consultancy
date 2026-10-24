@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
-import { makeReference } from "@/lib/utils";
+import { formatNaira, makeReference } from "@/lib/utils";
 import {
   contactSchema,
   paymentProofSchema,
@@ -17,6 +17,10 @@ import {
   type SignupInput,
 } from "@/lib/validations";
 import { saveUpload, validateUpload } from "@/server/uploads";
+import { mail } from "@/server/mail";
+import { initializePayment, paystackEnabled } from "@/server/paystack";
+import { site } from "@/data/site";
+import { CAMPUS_LABEL, type Campus } from "@/lib/constants";
 
 export type ActionResult<T = undefined> =
   | { ok: true; message: string; data?: T }
@@ -71,6 +75,7 @@ export async function contactAction(input: ContactInput): Promise<ActionResult> 
   const parsed = contactSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Please correct the highlighted fields.", fieldErrors: parsed.error.flatten().fieldErrors };
   await prisma.contactMessage.create({ data: { ...parsed.data, phone: parsed.data.phone || null } });
+  await Promise.all([mail.contactToUnit(parsed.data), mail.contactAcknowledgement(parsed.data.email, parsed.data.name, parsed.data.subject)]);
   return { ok: true, message: "Thank you. Your message has been received and a member of the Unit will respond within two working days." };
 }
 
@@ -137,6 +142,13 @@ export async function submitShopApplication(formData: FormData): Promise<ActionR
 
   revalidatePath("/dashboard");
   revalidatePath("/admin/shop-applications");
+  if (session.user.email) {
+    await mail.shopApplicationReceived(session.user.email, session.user.name ?? "Applicant", {
+      reference,
+      businessName: data.businessName,
+      campus: CAMPUS_LABEL[data.campus as Campus],
+    });
+  }
   return { ok: true, message: "Application submitted successfully.", data: { reference } };
 }
 
@@ -175,6 +187,13 @@ export async function registerForProgramme(input: RegistrationInput): Promise<Ac
 
   revalidatePath("/dashboard");
   revalidatePath(`/programmes/${programme.slug}`);
+  if (session.user.email) {
+    await mail.registrationReceived(session.user.email, session.user.name ?? "Participant", {
+      reference,
+      programme: programme.title,
+      fee: formatNaira(programme.fee),
+    });
+  }
   return { ok: true, message: "Registration received.", data: { reference } };
 }
 
@@ -195,6 +214,32 @@ export async function submitPaymentReference(input: { registrationId: string; pa
   });
   revalidatePath("/dashboard");
   return { ok: true, message: "Payment reference submitted for verification." };
+}
+
+/** Starts a Paystack checkout for one of the signed-in user's registrations. */
+export async function startCardPayment(registrationId: string): Promise<ActionResult<{ url: string }>> {
+  const session = await getSession();
+  if (!session?.user) return { ok: false, error: "Please sign in again." };
+  if (!paystackEnabled()) return { ok: false, error: "Online payment is not available yet. Please pay by bank transfer." };
+
+  const reg = await prisma.registration.findUnique({ where: { id: registrationId }, include: { programme: true, user: true } });
+  if (!reg || reg.userId !== session.user.id) return { ok: false, error: "Registration not found." };
+  if (reg.paymentStatus === "PAID") return { ok: false, error: "This registration is already paid." };
+  if (reg.status === "REJECTED") return { ok: false, error: "This registration was not approved." };
+
+  try {
+    const url = await initializePayment({
+      email: reg.user.email,
+      amountNaira: reg.programme.fee,
+      registrationId: reg.id,
+      registrationRef: reg.reference,
+      callbackUrl: `${site.url}/api/payments/paystack/callback`,
+    });
+    return { ok: true, message: "Redirecting to Paystack…", data: { url } };
+  } catch (err) {
+    console.error("[paystack] initialize failed", err);
+    return { ok: false, error: "Could not start the payment. Please try again or pay by bank transfer." };
+  }
 }
 
 /* ── Public tracking ──────────────────────────────────────────────── */

@@ -98,11 +98,27 @@ uploads/                 Application documents (git-ignored)
 
 **Programme registration.** A participant registers (seat limits are enforced) and gets a reference like `MOAUM-PR-2026-8H2LQ`. They pay by bank transfer and submit the transaction reference. Staff then use *Verify payment & confirm*, which unlocks the admission letter.
 
+## Email notifications
+
+Emails go out when:
+- a shop application is submitted, and whenever its status or committee note changes (allocation emails link to the letter);
+- a programme registration is received, confirmed, rejected or its payment is verified;
+- someone uses the contact form (an acknowledgement to them, plus the enquiry to `MAIL_UNIT_INBOX`, with reply-to set to the sender).
+
+Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` and `MAIL_FROM` in `.env`. Any SMTP provider works, for example Gmail with an app password, Zoho Mail or Resend. **Without `SMTP_HOST` nothing is sent:** each email is logged as `[mail:dev] To: … | Subject: …` in the server output. A failed send is logged and never blocks the action that triggered it.
+
+## Online payments (Paystack)
+
+1. Create a Paystack account and copy the **test** secret key (`sk_test_…`) into `PAYSTACK_SECRET_KEY`.
+2. Restart the server. Registrations awaiting payment now show **Pay ₦… online** on the participant's dashboard.
+3. In Paystack → Settings → API Keys & Webhooks, set the webhook URL to `https://<your-domain>/api/payments/paystack/webhook`.
+
+How it works: the checkout goes to Paystack's hosted page. Paystack redirects back to `/api/payments/paystack/callback`, which **re-verifies the transaction with Paystack's API** before marking the registration *Paid / Confirmed* and emailing the participant. The webhook does the same if the payer closes the browser early, and it rejects requests without a valid `x-paystack-signature`. The amount and currency are checked against the programme fee on record, and processing the same payment twice is harmless. Bank transfer with manual verification remains available. Switch to the live key (`sk_live_…`) only after testing.
+
 ## Before going live
 
 - **Replace placeholder content** in `src/data/site.ts` (phone numbers, emails, leadership names, testimonials) and the bank details in `src/lib/constants.ts` (`BANK_DETAILS`; the account number is a dummy `0000000000`).
 - **Use PostgreSQL**: change `provider` in `prisma/schema.prisma` to `postgresql`, set `DATABASE_URL`, and run `npm run db:push`.
 - **File storage:** uploads go to `UPLOAD_DIR` on local disk. On serverless hosting, swap `src/server/uploads.ts` for S3/Cloudinary/etc.
-- **Online payments:** the bank-transfer flow is the integration point. A Paystack/Flutterwave checkout can set `paymentStatus` to `PAID` from a verified webhook.
-- **Email notifications** (status changes, receipts) are not wired up yet. The natural hook points are `reviewShopApplication` and `updateRegistration` in `src/server/admin-actions.ts`.
+- **Turn on email and Paystack** by filling in the `SMTP_*` and `PAYSTACK_SECRET_KEY` settings (see below).
 - Set a strong `NEXTAUTH_SECRET` and the real `NEXTAUTH_URL`.

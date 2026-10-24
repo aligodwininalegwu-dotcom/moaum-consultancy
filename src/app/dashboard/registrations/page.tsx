@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { Download, Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
@@ -6,6 +7,8 @@ import { PageTitle } from "@/components/dashboard/shell";
 import { StatusBadge } from "@/components/status-badge";
 import { StatusTimeline } from "@/components/status-timeline";
 import { PaymentReferenceForm } from "@/components/dashboard/payment-reference-form";
+import { PayOnlineButton, PaymentResultToast } from "@/components/dashboard/pay-online";
+import { paystackEnabled } from "@/server/paystack";
 import { BankDetails } from "@/components/bank-details";
 import { Button } from "@/components/ui/button";
 import { formatDate, formatNaira } from "@/lib/utils";
@@ -17,9 +20,13 @@ export default async function MyRegistrationsPage() {
     orderBy: { createdAt: "desc" },
     include: { programme: true },
   });
+  const canPayOnline = paystackEnabled();
 
   return (
     <div>
+      <Suspense>
+        <PaymentResultToast />
+      </Suspense>
       <PageTitle
         title="Programme registrations"
         description="Pay for your programmes, track confirmation and download admission letters."
@@ -62,7 +69,13 @@ export default async function MyRegistrationsPage() {
                 )}
 
                 {r.status !== "REJECTED" && r.paymentStatus !== "PAID" && (
-                  <div className="mt-6">
+                  <div className="mt-6 space-y-3">
+                    {canPayOnline && (
+                      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gold-500/30 bg-gold-500/5 p-4">
+                        <p className="text-sm">Pay instantly by card, bank transfer or USSD via Paystack. Your seat is confirmed automatically.</p>
+                        <PayOnlineButton registrationId={r.id} amount={formatNaira(r.programme.fee)} />
+                      </div>
+                    )}
                     <PaymentReferenceForm registrationId={r.id} current={r.paymentReference} status={r.paymentStatus} />
                   </div>
                 )}
