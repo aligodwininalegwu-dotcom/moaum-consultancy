@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { CheckCircle2, Copy, FileUp, Loader2, LogIn, Send } from "lucide-react";
 import { shopApplicationSchema, type ShopApplicationInput } from "@/lib/validations";
 import { submitShopApplication } from "@/server/actions";
-import { ALLOWED_UPLOAD_TYPES, CAMPUS_LABEL, MAX_UPLOAD_BYTES, type Campus } from "@/lib/constants";
+import { ALLOWED_UPLOAD_TYPES, CAMPUS_LABEL, MAX_UPLOAD_BYTES, MAX_UPLOAD_LABEL, type Campus } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Input, NativeSelect, Textarea } from "@/components/ui/input";
 import { Field } from "@/components/ui/label";
@@ -21,7 +21,7 @@ type Files = { idDocument: File | null; proposalDocument: File | null };
 function checkFile(file: File | null, label: string) {
   if (!file) return `${label} is required`;
   if (!ALLOWED_UPLOAD_TYPES.includes(file.type)) return "Upload a PDF, JPG or PNG file";
-  if (file.size > MAX_UPLOAD_BYTES) return "File must be 5 MB or smaller";
+  if (file.size > MAX_UPLOAD_BYTES) return `File must be ${MAX_UPLOAD_LABEL} or smaller`;
   return undefined;
 }
 
@@ -130,7 +130,7 @@ export const ShopApplicationForm = React.forwardRef<
           <motion.form method="post" key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onSubmit={onSubmit} noValidate className="space-y-8">
             <div>
               <h3 className="font-serif text-2xl font-semibold">Shop application form</h3>
-              <p className="mt-1 text-sm text-muted-foreground">Fields marked * are required. Documents must be PDF, JPG or PNG (max. 5 MB).</p>
+              <p className="mt-1 text-sm text-muted-foreground">Fields marked * are required. Documents must be PDF, JPG or PNG (max. {MAX_UPLOAD_LABEL} each).</p>
             </div>
 
             <fieldset className="grid gap-5 sm:grid-cols-2">
@@ -197,7 +197,7 @@ export const ShopApplicationForm = React.forwardRef<
                     <span className="min-w-0 text-sm">
                       <span className="block truncate font-medium">{files[key]?.name ?? "Choose a file"}</span>
                       <span className="block text-xs text-muted-foreground">
-                        {files[key] ? `${(files[key]!.size / 1024).toFixed(0)} KB` : "PDF, JPG or PNG up to 5 MB"}
+                        {files[key] ? `${(files[key]!.size / 1024).toFixed(0)} KB` : `PDF, JPG or PNG up to ${MAX_UPLOAD_LABEL}`}
                       </span>
                     </span>
                     <input

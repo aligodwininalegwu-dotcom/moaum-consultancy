@@ -65,7 +65,9 @@ export const STATUS_LABEL: Record<string, string> = {
   PAID: "Paid",
 };
 
-export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+// Two documents per application must fit in one request; Vercel caps requests at 4.5 MB.
+export const MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
+export const MAX_UPLOAD_LABEL = "2 MB";
 export const ALLOWED_UPLOAD_TYPES = ["application/pdf", "image/jpeg", "image/png"];
 
 export const BANK_DETAILS = {

@@ -13,7 +13,11 @@ export const site = {
   mottoEnglish: "Knowledge for the Liberation of the People",
   description:
     "The Consultancy Unit of Rev. Fr. Moses Orshio Adasu University, Makurdi manages campus shop allocation, e-learning and summer computer programmes, training, and professional consultancy services.",
-  url: process.env.NEXTAUTH_URL ?? "http://localhost:3000",
+  // Used for email links and the Paystack return address. On Vercel this falls
+  // back to the project's production domain if NEXTAUTH_URL isn't set.
+  url:
+    process.env.NEXTAUTH_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000"),
   contact: {
     address: "Consultancy Unit, Senate Building Annex, Main Campus, Rev. Fr. Moses Orshio Adasu University, P.M.B. 102119, Makurdi, Benue State",
     email: "consultancy@moaum.edu.ng",
@@ -89,7 +93,7 @@ export const shopGuidelines = [
   },
   {
     title: "Required documents",
-    body: "A valid ID (student ID card, staff ID, NIN slip, driver's licence or international passport) and a short business proposal (PDF, max. 5 MB) describing the business, target customers, pricing and staffing.",
+    body: "A valid ID (student ID card, staff ID, NIN slip, driver's licence or international passport) and a short business proposal (PDF or photo, max. 2 MB each) describing the business, target customers, pricing and staffing.",
   },
   {
     title: "Assessment",

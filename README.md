@@ -115,10 +115,38 @@ Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` and `MAIL_FROM` in `.
 
 How it works: the checkout goes to Paystack's hosted page. Paystack redirects back to `/api/payments/paystack/callback`, which **re-verifies the transaction with Paystack's API** before marking the registration *Paid / Confirmed* and emailing the participant. The webhook does the same if the payer closes the browser early, and it rejects requests without a valid `x-paystack-signature`. The amount and currency are checked against the programme fee on record, and processing the same payment twice is harmless. Bank transfer with manual verification remains available. Switch to the live key (`sk_live_…`) only after testing.
 
+## Deploying to Vercel
+
+The live site runs on **Vercel** (hosting), **Neon** (PostgreSQL) and **Vercel Blob** (uploaded documents). Local development keeps using SQLite and the `uploads/` folder, and nothing needs to change on your PC.
+
+1. **Import the project:** in Vercel, choose *Add New → Project* and import the GitHub repository. Keep the defaults.
+2. **Add storage** in the Vercel project, under *Storage*:
+   - *Create Database → Neon (Postgres)*. This adds `DATABASE_URL` and `DATABASE_URL_UNPOOLED`.
+   - *Create → Blob*. This adds `BLOB_READ_WRITE_TOKEN`.
+3. **Environment variables** in *Settings → Environment Variables*:
+   - `NEXTAUTH_SECRET`: a new random value, not your local one.
+   - `NEXTAUTH_URL`: the live address, e.g. `https://moaum-consultancy.vercel.app`.
+   - `ADMIN_EMAIL`, `ADMIN_PASSWORD` (10+ characters), and optionally `ADMIN_NAME`.
+   - Optional: the `SMTP_*`, `MAIL_FROM`, `MAIL_UNIT_INBOX` and `PAYSTACK_SECRET_KEY` values.
+4. **Redeploy.** Vercel runs `npm run vercel-build`, which:
+   - switches Prisma to PostgreSQL (`scripts/prepare-postgres.mjs`);
+   - applies the schema (`prisma db push`, which refuses destructive changes);
+   - loads the shop and programme catalogue if the tables are empty;
+   - creates the admin account if it doesn't exist (`prisma/seed-production.ts`);
+   - builds the site.
+
+   The demo accounts are **never** created in production.
+5. **Paystack webhook:** set it to `https://<your-domain>/api/payments/paystack/webhook`.
+
+Every `git push` to `main` redeploys automatically.
+
+Notes:
+- Uploads are limited to 2 MB per file so an application fits within Vercel's 4.5 MB request limit.
+- Blob files have long random URLs that are never shown to users; downloads always go through `/api/files`, which checks permissions.
+- Search in the admin console is case-sensitive on PostgreSQL (SQLite ignores case for plain letters).
+
 ## Before going live
 
 - **Replace placeholder content** in `src/data/site.ts` (phone numbers, emails, leadership names, testimonials) and the bank details in `src/lib/constants.ts` (`BANK_DETAILS`; the account number is a dummy `0000000000`).
-- **Use PostgreSQL**: change `provider` in `prisma/schema.prisma` to `postgresql`, set `DATABASE_URL`, and run `npm run db:push`.
-- **File storage:** uploads go to `UPLOAD_DIR` on local disk. On serverless hosting, swap `src/server/uploads.ts` for S3/Cloudinary/etc.
 - **Turn on email and Paystack** by filling in the `SMTP_*` and `PAYSTACK_SECRET_KEY` settings (see below).
 - Set a strong `NEXTAUTH_SECRET` and the real `NEXTAUTH_URL`.

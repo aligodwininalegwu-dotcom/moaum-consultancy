@@ -65,7 +65,7 @@ export default async function ShopsPage({ searchParams }: { searchParams: Promis
               <p className="flex items-center gap-2 font-semibold"><FileCheck2 className="h-5 w-5 text-gold-600" /> Checklist</p>
               <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                 <li>• A valid means of identification</li>
-                <li>• A business proposal (PDF, max. 5 MB)</li>
+                <li>• A business proposal (PDF, max. 2 MB)</li>
                 <li>• An active phone number</li>
                 <li>• Food vendors: a food handler's certificate at interview</li>
               </ul>

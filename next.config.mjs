@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   eslint: { ignoreDuringBuilds: true },
   experimental: {
-    serverActions: { bodySizeLimit: "6mb" },
+    serverActions: { bodySizeLimit: "4.5mb" },
   },
 };
 

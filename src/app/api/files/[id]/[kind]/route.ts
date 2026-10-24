@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 import { CONSOLE_ROLES } from "@/lib/constants";
-import { readUpload } from "@/server/uploads";
+import { readUpload, storedExtension } from "@/server/uploads";
 
 /** Streams an application document to its owner or to staff/admins. */
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string; kind: string }> }) {
@@ -23,7 +23,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   return new NextResponse(new Uint8Array(file.data), {
     headers: {
       "Content-Type": file.type,
-      "Content-Disposition": `inline; filename="${app.reference}-${kind}.${name!.split(".").pop()}"`,
+      "Content-Disposition": `inline; filename="${app.reference}-${kind}.${storedExtension(name!)}"`,
       "Cache-Control": "private, no-store",
     },
   });

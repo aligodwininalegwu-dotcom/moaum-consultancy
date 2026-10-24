@@ -13,7 +13,8 @@
     "db:reset": "prisma db push --force-reset && prisma db seed",
     "setup": "prisma db push && prisma db seed",
     "postinstall": "prisma generate",
-    "mail:test": "tsx scripts/test-email.ts"
+    "mail:test": "tsx scripts/test-email.ts",
+    "vercel-build": "node scripts/prepare-postgres.mjs && prisma generate && prisma db push --skip-generate && tsx prisma/seed-production.ts && next build"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -28,6 +29,7 @@
     "@radix-ui/react-select": "^2.1.4",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.2",
+    "@vercel/blob": "^2.8.2",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
