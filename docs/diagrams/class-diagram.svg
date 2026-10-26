@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1230" viewBox="0 0 1800 1230">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="900.0" y="36.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="22" font-weight="bold" font-style="normal" text-anchor="middle" fill="#0A4D3C">Class Diagram: MOAUM Consultancy Portal</text>
+<rect x="40" y="70" width="440" height="355" fill="#ffffff" stroke="#1f2a27" stroke-width="1.5"/>
+<rect x="40" y="70" width="440" height="34" fill="#0A4D3C" stroke="#1f2a27" stroke-width="1.5"/>
+<text x="260.0" y="93.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" font-style="normal" text-anchor="middle" fill="#ffffff">User</text>
+<text x="52.0" y="129.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- id : String</text>
+<text x="52.0" y="148.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- name : String</text>
+<text x="52.0" y="167.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- email : String  {unique}</text>
+<text x="52.0" y="186.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- passwordHash : String</text>
+<text x="52.0" y="205.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- role : Role = STUDENT</text>
+<text x="52.0" y="224.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- phone : String [0..1]</text>
+<text x="52.0" y="243.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- matricNo : String [0..1]</text>
+<text x="52.0" y="262.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- department : String [0..1]</text>
+<text x="52.0" y="281.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- active : Boolean = true</text>
+<text x="52.0" y="300.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- createdAt : DateTime</text>
+<line x1="40.0" y1="314.0" x2="480.0" y2="314.0" stroke="#1f2a27" stroke-width="1.2"/>
+<text x="52.0" y="335.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ register(details) : User</text>
+<text x="52.0" y="354.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ logIn(email, password) : Session</text>
+<text x="52.0" y="373.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ updateProfile(details) : void</text>
+<text x="52.0" y="392.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ changeRole(role) : void  «admin»</text>
+<text x="52.0" y="411.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ deactivate() : void  «admin»</text>
+<rect x="680" y="70" width="440" height="412" fill="#ffffff" stroke="#1f2a27" stroke-width="1.5"/>
+<rect x="680" y="70" width="440" height="34" fill="#0A4D3C" stroke="#1f2a27" stroke-width="1.5"/>
+<text x="900.0" y="93.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" font-style="normal" text-anchor="middle" fill="#ffffff">ShopApplication</text>
+<text x="692.0" y="129.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- id : String</text>
+<text x="692.0" y="148.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- reference : String  {unique}</text>
+<text x="692.0" y="167.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- campus : Campus</text>
+<text x="692.0" y="186.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- businessName : String</text>
+<text x="692.0" y="205.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- businessType : String</text>
+<text x="692.0" y="224.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- description : String</text>
+<text x="692.0" y="243.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- yearsExperience : Integer = 0</text>
+<text x="692.0" y="262.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- phone : String</text>
+<text x="692.0" y="281.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- idDocument : String [0..1]</text>
+<text x="692.0" y="300.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- proposalDocument : String [0..1]</text>
+<text x="692.0" y="319.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- status : ApplicationStatus = PENDING</text>
+<text x="692.0" y="338.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- adminNote : String [0..1]</text>
+<text x="692.0" y="357.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- createdAt : DateTime</text>
+<line x1="680.0" y1="371.0" x2="1120.0" y2="371.0" stroke="#1f2a27" stroke-width="1.2"/>
+<text x="692.0" y="392.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ submit(form, idDoc, proposal) : String</text>
+<text x="692.0" y="411.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ review(status, note) : void  «staff»</text>
+<text x="692.0" y="430.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ allocate(shop : Shop) : void  «staff»</text>
+<text x="692.0" y="449.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ track(reference) : ApplicationStatus</text>
+<text x="692.0" y="468.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ allocationLetter() : PDF</text>
+<rect x="1320" y="70" width="440" height="336" fill="#ffffff" stroke="#1f2a27" stroke-width="1.5"/>
+<rect x="1320" y="70" width="440" height="34" fill="#0A4D3C" stroke="#1f2a27" stroke-width="1.5"/>
+<text x="1540.0" y="93.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" font-style="normal" text-anchor="middle" fill="#ffffff">Shop</text>
+<text x="1332.0" y="129.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- id : String</text>
+<text x="1332.0" y="148.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- code : String  {unique}</text>
+<text x="1332.0" y="167.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- campus : Campus</text>
+<text x="1332.0" y="186.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- block : String</text>
+<text x="1332.0" y="205.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- location : String</text>
+<text x="1332.0" y="224.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- category : String</text>
+<text x="1332.0" y="243.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- sizeSqm : Float</text>
+<text x="1332.0" y="262.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- annualRent : Integer</text>
+<text x="1332.0" y="281.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- status : ShopStatus = AVAILABLE</text>
+<text x="1332.0" y="300.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- features : String</text>
+<text x="1332.0" y="319.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- description : String</text>
+<line x1="1320.0" y1="333.0" x2="1760.0" y2="333.0" stroke="#1f2a27" stroke-width="1.2"/>
+<text x="1332.0" y="354.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ isAvailable() : Boolean</text>
+<text x="1332.0" y="373.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ setStatus(status) : void  «staff»</text>
+<text x="1332.0" y="392.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ save(details) : void  «staff»</text>
+<rect x="40" y="580" width="440" height="355" fill="#ffffff" stroke="#1f2a27" stroke-width="1.5"/>
+<rect x="40" y="580" width="440" height="34" fill="#0A4D3C" stroke="#1f2a27" stroke-width="1.5"/>
+<text x="260.0" y="603.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" font-style="normal" text-anchor="middle" fill="#ffffff">Registration</text>
+<text x="52.0" y="639.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- id : String</text>
+<text x="52.0" y="658.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- reference : String  {unique}</text>
+<text x="52.0" y="677.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- status : RegistrationStatus = PENDING</text>
+<text x="52.0" y="696.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- paymentStatus : PaymentStatus = UNPAID</text>
+<text x="52.0" y="715.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- paymentReference : String [0..1]</text>
+<text x="52.0" y="734.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- phone : String</text>
+<text x="52.0" y="753.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- institution : String [0..1]</text>
+<text x="52.0" y="772.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- motivation : String [0..1]</text>
+<text x="52.0" y="791.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- adminNote : String [0..1]</text>
+<text x="52.0" y="810.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- createdAt : DateTime</text>
+<line x1="40.0" y1="824.0" x2="480.0" y2="824.0" stroke="#1f2a27" stroke-width="1.2"/>
+<text x="52.0" y="845.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ register(programme, details) : String</text>
+<text x="52.0" y="864.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ submitPaymentReference(ref) : void</text>
+<text x="52.0" y="883.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ payOnline() : URL  «Paystack»</text>
+<text x="52.0" y="902.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ verifyAndConfirm() : void  «staff»</text>
+<text x="52.0" y="921.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ admissionLetter() : PDF</text>
+<rect x="680" y="580" width="440" height="393" fill="#ffffff" stroke="#1f2a27" stroke-width="1.5"/>
+<rect x="680" y="580" width="440" height="34" fill="#0A4D3C" stroke="#1f2a27" stroke-width="1.5"/>
+<text x="900.0" y="603.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" font-style="normal" text-anchor="middle" fill="#ffffff">Programme</text>
+<text x="692.0" y="639.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- id : String</text>
+<text x="692.0" y="658.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- slug : String  {unique}</text>
+<text x="692.0" y="677.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- title : String</text>
+<text x="692.0" y="696.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- category : ProgrammeCategory</text>
+<text x="692.0" y="715.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- summary : String</text>
+<text x="692.0" y="734.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- description : String</text>
+<text x="692.0" y="753.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- duration : String</text>
+<text x="692.0" y="772.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- mode : String</text>
+<text x="692.0" y="791.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- level : String</text>
+<text x="692.0" y="810.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- fee : Integer</text>
+<text x="692.0" y="829.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- seats : Integer</text>
+<text x="692.0" y="848.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- startDate : DateTime</text>
+<text x="692.0" y="867.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- modules : String[*]</text>
+<text x="692.0" y="886.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- featured : Boolean = false</text>
+<text x="692.0" y="905.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- active : Boolean = true</text>
+<line x1="680.0" y1="919.0" x2="1120.0" y2="919.0" stroke="#1f2a27" stroke-width="1.2"/>
+<text x="692.0" y="940.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ seatsLeft() : Integer</text>
+<text x="692.0" y="959.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ isOpen() : Boolean</text>
+<rect x="1320" y="580" width="440" height="279" fill="#ffffff" stroke="#1f2a27" stroke-width="1.5"/>
+<rect x="1320" y="580" width="440" height="34" fill="#0A4D3C" stroke="#1f2a27" stroke-width="1.5"/>
+<text x="1540.0" y="603.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" font-style="normal" text-anchor="middle" fill="#ffffff">ContactMessage</text>
+<text x="1332.0" y="639.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- id : String</text>
+<text x="1332.0" y="658.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- name : String</text>
+<text x="1332.0" y="677.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- email : String</text>
+<text x="1332.0" y="696.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- phone : String [0..1]</text>
+<text x="1332.0" y="715.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- category : String</text>
+<text x="1332.0" y="734.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- subject : String</text>
+<text x="1332.0" y="753.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- message : String</text>
+<text x="1332.0" y="772.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- read : Boolean = false</text>
+<text x="1332.0" y="791.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">- createdAt : DateTime</text>
+<line x1="1320.0" y1="805.0" x2="1760.0" y2="805.0" stroke="#1f2a27" stroke-width="1.2"/>
+<text x="1332.0" y="826.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ send() : void</text>
+<text x="1332.0" y="845.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#22413a">+ markRead(read : Boolean) : void  «staff»</text>
+<line x1="480.0" y1="190.0" x2="680.0" y2="190.0" stroke="#1f2a27" stroke-width="1.4"/>
+<text x="488.0" y="207.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="start" fill="#1f2a27">1</text>
+<text x="672.0" y="207.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="end" fill="#1f2a27">0..*</text>
+<text x="580.0" y="182.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="italic" text-anchor="middle" fill="#3d4a46">applies for</text>
+<line x1="480.0" y1="300.0" x2="680.0" y2="300.0" stroke="#1f2a27" stroke-width="1.4"/>
+<text x="488.0" y="317.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="start" fill="#1f2a27">0..1</text>
+<text x="672.0" y="317.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="end" fill="#1f2a27">0..*</text>
+<text x="580.0" y="292.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="italic" text-anchor="middle" fill="#3d4a46">reviews</text>
+<line x1="1120.0" y1="190.0" x2="1320.0" y2="190.0" stroke="#1f2a27" stroke-width="1.4"/>
+<text x="1128.0" y="207.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="start" fill="#1f2a27">0..*</text>
+<text x="1312.0" y="207.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="end" fill="#1f2a27">0..1</text>
+<text x="1220.0" y="182.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="italic" text-anchor="middle" fill="#3d4a46">prefers</text>
+<line x1="1120.0" y1="300.0" x2="1320.0" y2="300.0" stroke="#1f2a27" stroke-width="1.4"/>
+<text x="1128.0" y="317.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="start" fill="#1f2a27">0..*</text>
+<text x="1312.0" y="317.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="end" fill="#1f2a27">0..1</text>
+<text x="1220.0" y="292.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="italic" text-anchor="middle" fill="#3d4a46">is allocated</text>
+<line x1="160.0" y1="425.0" x2="160.0" y2="580.0" stroke="#1f2a27" stroke-width="1.4"/>
+<text x="168.0" y="445.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="start" fill="#1f2a27">1</text>
+<text x="168.0" y="570.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="start" fill="#1f2a27">0..*</text>
+<text x="196.0" y="506.5" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="italic" text-anchor="middle" fill="#3d4a46">makes</text>
+<line x1="680.0" y1="700.0" x2="480.0" y2="700.0" stroke="#1f2a27" stroke-width="1.4"/>
+<text x="672.0" y="717.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="end" fill="#1f2a27">1</text>
+<text x="488.0" y="717.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="start" fill="#1f2a27">0..*</text>
+<text x="580.0" y="692.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="italic" text-anchor="middle" fill="#3d4a46">has</text>
+<text x="40.0" y="1009.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="start" fill="#0A4D3C">Enumerations (allowed values of the typed attributes above)</text>
+<rect x="40" y="1023" width="150" height="110" fill="#ffffff" stroke="#1f2a27" stroke-width="1.3"/>
+<rect x="40" y="1023" width="150" height="44" fill="#f6efd8" stroke="#1f2a27" stroke-width="1.3"/>
+<text x="115.0" y="1040.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="middle" fill="#6c4f1c">«enumeration»</text>
+<text x="115.0" y="1058.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="middle" fill="#1f2a27">Role</text>
+<text x="52.0" y="1085.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">STUDENT</text>
+<text x="52.0" y="1103.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">STAFF</text>
+<text x="52.0" y="1121.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">ADMIN</text>
+<rect x="208" y="1023" width="160" height="92" fill="#ffffff" stroke="#1f2a27" stroke-width="1.3"/>
+<rect x="208" y="1023" width="160" height="44" fill="#f6efd8" stroke="#1f2a27" stroke-width="1.3"/>
+<text x="288.0" y="1040.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="middle" fill="#6c4f1c">«enumeration»</text>
+<text x="288.0" y="1058.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="middle" fill="#1f2a27">Campus</text>
+<text x="220.0" y="1085.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">WESTERN</text>
+<text x="220.0" y="1103.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">EASTERN</text>
+<rect x="386" y="1023" width="200" height="128" fill="#ffffff" stroke="#1f2a27" stroke-width="1.3"/>
+<rect x="386" y="1023" width="200" height="44" fill="#f6efd8" stroke="#1f2a27" stroke-width="1.3"/>
+<text x="486.0" y="1040.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="middle" fill="#6c4f1c">«enumeration»</text>
+<text x="486.0" y="1058.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="middle" fill="#1f2a27">ShopStatus</text>
+<text x="398.0" y="1085.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">AVAILABLE</text>
+<text x="398.0" y="1103.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">OCCUPIED</text>
+<text x="398.0" y="1121.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">RESERVED</text>
+<text x="398.0" y="1139.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">MAINTENANCE</text>
+<rect x="604" y="1023" width="220" height="146" fill="#ffffff" stroke="#1f2a27" stroke-width="1.3"/>
+<rect x="604" y="1023" width="220" height="44" fill="#f6efd8" stroke="#1f2a27" stroke-width="1.3"/>
+<text x="714.0" y="1040.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="middle" fill="#6c4f1c">«enumeration»</text>
+<text x="714.0" y="1058.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="middle" fill="#1f2a27">ApplicationStatus</text>
+<text x="616.0" y="1085.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">PENDING</text>
+<text x="616.0" y="1103.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">UNDER_REVIEW</text>
+<text x="616.0" y="1121.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">APPROVED</text>
+<text x="616.0" y="1139.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">REJECTED</text>
+<text x="616.0" y="1157.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">ALLOCATED</text>
+<rect x="842" y="1023" width="220" height="128" fill="#ffffff" stroke="#1f2a27" stroke-width="1.3"/>
+<rect x="842" y="1023" width="220" height="44" fill="#f6efd8" stroke="#1f2a27" stroke-width="1.3"/>
+<text x="952.0" y="1040.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="middle" fill="#6c4f1c">«enumeration»</text>
+<text x="952.0" y="1058.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="middle" fill="#1f2a27">RegistrationStatus</text>
+<text x="854.0" y="1085.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">PENDING</text>
+<text x="854.0" y="1103.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">CONFIRMED</text>
+<text x="854.0" y="1121.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">REJECTED</text>
+<text x="854.0" y="1139.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">COMPLETED</text>
+<rect x="1080" y="1023" width="250" height="110" fill="#ffffff" stroke="#1f2a27" stroke-width="1.3"/>
+<rect x="1080" y="1023" width="250" height="44" fill="#f6efd8" stroke="#1f2a27" stroke-width="1.3"/>
+<text x="1205.0" y="1040.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="middle" fill="#6c4f1c">«enumeration»</text>
+<text x="1205.0" y="1058.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="middle" fill="#1f2a27">PaymentStatus</text>
+<text x="1092.0" y="1085.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">UNPAID</text>
+<text x="1092.0" y="1103.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">AWAITING_VERIFICATION</text>
+<text x="1092.0" y="1121.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">PAID</text>
+<rect x="1348" y="1023" width="210" height="92" fill="#ffffff" stroke="#1f2a27" stroke-width="1.3"/>
+<rect x="1348" y="1023" width="210" height="44" fill="#f6efd8" stroke="#1f2a27" stroke-width="1.3"/>
+<text x="1453.0" y="1040.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="middle" fill="#6c4f1c">«enumeration»</text>
+<text x="1453.0" y="1058.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="middle" fill="#1f2a27">ProgrammeCategory</text>
+<text x="1360.0" y="1085.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">ELEARNING</text>
+<text x="1360.0" y="1103.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="12" font-weight="normal" font-style="normal" text-anchor="start" fill="#1f2a27">SUMMER</text>
+<text x="1760.0" y="1212.0" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="end" fill="#5d6b66">Visibility: - private, + public.  [0..1] = optional.  «staff» / «admin» = restricted operation.</text>
+</svg>
