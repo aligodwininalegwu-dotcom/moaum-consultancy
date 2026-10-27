@@ -433,6 +433,72 @@ def class_diagram():
     svg.save("class-diagram.svg")
 
 
+# ── Architecture diagram ───────────────────────────────────────────────
+
+
+def layer_box(svg, x, y, w, h, title, items, fill="#ffffff", head=GREEN):
+    svg.add(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="{fill}" stroke="{head}" stroke-width="1.6"/>')
+    svg.text(x + 16, y + 26, title, size=15, weight="bold", anchor="start", fill=head)
+    ix = x + 16
+    for label, sub in items:
+        bw = (w - 32 - (len(items) - 1) * 12) / len(items)
+        svg.add(f'<rect x="{ix:.1f}" y="{y + 40}" width="{bw:.1f}" height="{h - 56}" rx="6" fill="#ffffff" stroke="#9aa9a4" stroke-width="1"/>')
+        svg.text(ix + bw / 2, y + 40 + (h - 56) / 2 - 2, label, size=13, weight="bold")
+        svg.text(ix + bw / 2, y + 40 + (h - 56) / 2 + 16, sub, size=11, fill="#5d6b66")
+        ix += bw + 12
+
+
+def down_arrow(svg, x, y1, y2, label=""):
+    svg.line(x, y1, x, y2, width=1.6)
+    svg.open_arrow(x, y1, x, y2, size=10)
+    svg.open_arrow(x, y2, x, y1, size=10)
+    if label:
+        svg.text(x + 10, (y1 + y2) / 2 + 4, label, size=11, anchor="start", fill="#3d4a46", style="italic")
+
+
+def architecture_diagram():
+    svg = Svg(1400, 830)
+    svg.text(700, 36, "System Architecture: MOAUM Consultancy Portal", size=22, weight="bold", fill=GREEN)
+    W, X = 1160, 120
+    layer_box(svg, X, 70, W, 130, "Presentation layer (browser)", [
+        ("Public website", "home · services · shops · programmes"),
+        ("Student dashboard", "applications · registrations · letters"),
+        ("Admin console", "review · allocate · verify · users"),
+    ], fill="#f3f8f6")
+    down_arrow(svg, 700, 200, 250, "HTTPS (React Server Components, Server Actions, API routes)")
+    layer_box(svg, X, 250, W, 150, "Application layer (Next.js 15 on Vercel)", [
+        ("Middleware + NextAuth", "sessions · role checks"),
+        ("Server Actions", "apply · register · review · verify"),
+        ("API routes", "files · PDF letters · CSV · Paystack"),
+        ("Services", "mail · uploads · letters · payments"),
+    ], fill="#f3f8f6")
+    down_arrow(svg, 470, 400, 460, "Prisma ORM")
+    down_arrow(svg, 930, 400, 460, "SDK / HTTPS")
+    layer_box(svg, X, 460, 540, 140, "Data layer", [
+        ("PostgreSQL (Neon)", "SQLite in development"),
+        ("Vercel Blob", "uploaded documents"),
+    ], fill="#fff8e6", head="#83611a")
+    layer_box(svg, X + 580, 460, 580, 140, "External services", [
+        ("Paystack", "online payment"),
+        ("Gmail SMTP", "email notifications"),
+    ], fill="#fff8e6", head="#83611a")
+    svg.add(f'<rect x="{X}" y="650" width="{W}" height="110" rx="10" fill="#ffffff" stroke="#9aa9a4" stroke-width="1.2" stroke-dasharray="6 5"/>')
+    svg.text(X + 16, 676, "Delivery pipeline", size=15, weight="bold", anchor="start", fill="#3d4a46")
+    steps = ["Developer machine", "git push", "GitHub repository", "Vercel build (vercel-build)", "Live site"]
+    sx = X + 30
+    for i, s in enumerate(steps):
+        bw = 190
+        svg.add(f'<rect x="{sx}" y="692" width="{bw}" height="46" rx="6" fill="#f3f6f5" stroke="#9aa9a4"/>')
+        svg.text(sx + bw / 2, 720, s, size=12.5, weight="bold" if i in (2, 4) else "normal")
+        if i < len(steps) - 1:
+            svg.line(sx + bw + 4, 715, sx + bw + 32, 715, width=1.4)
+            svg.open_arrow(sx + bw + 4, 715, sx + bw + 32, 715, size=9)
+        sx += bw + 36
+    svg.text(700, 800, "Every push to the main branch is built, the database schema applied and the catalogue seeded, then the site is published.", size=12, fill="#5d6b66")
+    svg.save("architecture-diagram.svg")
+
+
 if __name__ == "__main__":
     use_case_diagram()
     class_diagram()
+    architecture_diagram()
